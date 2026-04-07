@@ -1,0 +1,63 @@
+class Calculator:
+  @staticmethod
+  def add(n1, n2):
+    return n1 + n2
+
+  @staticmethod
+  def sub(n1, n2):
+    return n1 - n2
+
+  @staticmethod
+  def mul(n1, n2):
+    return n1 * n2
+
+  @staticmethod
+  def div(n1, n2):
+    # Adding a check for division by zero
+    if n2 == 0:
+      return "Error: Division by zero"
+    return n1 / n2
+
+def calculate():
+    # No need to create an instance of Calculator since methods are static
+    # calc = Calculator()
+
+    while True:
+        print('\nPlease select operation:\n'
+              '1. Add\n'
+              '2. Subtract\n'
+              '3. Multiply\n'
+              '4. Divide\n'
+              '5. Exit\n')
+
+        try:
+            sel = int(input('Select operation (1-5): '))
+        except ValueError:
+            print("Invalid input. Please enter a number between 1 and 5.")
+            continue
+
+        if sel == 5:
+            print("Exiting calculator. Goodbye!")
+            break
+
+        try:
+            n1 = float(input('Enter first number: '))
+            n2 = float(input('Enter second number: '))
+        except ValueError:
+            print("Invalid number input. Please try again.")
+            continue
+
+        if sel == 1:
+            print(f'{n1} + {n2} = {Calculator.add(n1, n2)}')
+        elif sel == 2:
+            print(f'{n1} - {n2} = {Calculator.sub(n1, n2)}')
+        elif sel == 3:
+            print(f'{n1} * {n2} = {Calculator.mul(n1, n2)}')
+        elif sel == 4:
+            result = Calculator.div(n1, n2)
+            print(f'{n1} / {n2} = {result}')
+        else:
+            print('Invalid selection. Please choose between 1 and 5.')
+
+if __name__ == "__main__":
+    calculate()

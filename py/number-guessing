@@ -1,0 +1,36 @@
+import random
+import math
+
+def get_bounds():
+    lower = int(input("Enter Lower Bound: "))
+    upper = int(input("Enter Upper Bound: "))
+    return lower, upper
+
+def generate_number(lower, upper):
+    return random.randint(lower, upper)
+
+def calculate_max_guesses(lower, upper):
+    return math.ceil(math.log2(upper - lower + 1))
+
+def play_game(number, max_guesses):
+    for attempt in range(max_guesses):
+        guess = int(input(f"Attempt {attempt+1}: Enter your guess: "))
+
+        if guess > number:
+            print("Try Again! You guessed too high.")
+        elif guess < number:
+            print("Try Again! You guessed too small.")
+        else:
+            print("Congratulations! You guessed it right.")
+            return
+    print(f"Better Luck Next Time! The number was {number}.")
+
+def main():
+    lower, upper = get_bounds()
+    number = generate_number(lower, upper)
+    max_guesses = calculate_max_guesses(lower, upper)
+    print(f"You have {max_guesses} chances to guess the number!")
+    play_game(number, max_guesses)
+
+if __name__ == "__main__":
+    main()
