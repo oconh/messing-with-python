@@ -1,0 +1,15 @@
+text = 'blue red green blue purple orange green blue blue blue red green blue purple orange green blue blue blue red green blue purple orange green blue blue red red red red red black black black'
+
+
+def top_words(text: str, n: int = 5) -> list:
+    counter = {}
+    words = text.split()
+    for word in words:
+        counter[word] = counter.get(word, 0) + 1
+    return sorted(counter.items(), key=lambda x: x[1], reverse=True)[:n]
+
+
+if __name__ == '__main__':
+    results = top_words(text, n=5)
+    for word, count in results:
+        print(f'{word}: {count}')
