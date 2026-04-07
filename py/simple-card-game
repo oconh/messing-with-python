@@ -1,0 +1,46 @@
+import random
+
+RANK_ORDER = ['2','3','4','5','6','7','8','9','10','Jack','Queen','King','Ace']
+
+class Card:
+    def __init__(self, suit: str, value: str) -> None:
+        self.suit = suit
+        self.value = value
+        self.rank = RANK_ORDER.index(value)
+
+    def __str__(self) -> str:
+        return f'{self.value} of {self.suit}'
+
+    @staticmethod
+    def build() -> list:
+        suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+        return [Card(suit, value) for suit in suits for value in RANK_ORDER]
+
+
+class Deck:
+    def __init__(self) -> None:
+        self.deck = Card.build()
+
+    def shuffle(self) -> None:
+        random.shuffle(self.deck)
+
+    def draw(self) -> Card:
+        return self.deck.pop()
+
+
+if __name__ == '__main__':
+    playing_deck = Deck()
+    playing_deck.shuffle()
+
+    card1 = playing_deck.draw()
+    card2 = playing_deck.draw()
+
+    print(f'Player 1: {card1}')
+    print(f'Player 2: {card2}')
+
+    if card1.rank > card2.rank:
+        print('Player 1 wins')
+    elif card1.rank < card2.rank:
+        print('Player 2 wins')
+    else:
+        print('Tie')

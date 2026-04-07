@@ -1,0 +1,44 @@
+from time import perf_counter
+from functools import wraps
+
+def timer(func):
+  @wraps(func)
+  def wrapper(*args, **kwargs):
+    """A wrapper function for timing other functions."""
+    start = perf_counter()
+    result = func(*args, **kwargs)
+    end = perf_counter()
+    print(f'{func.__name__} took {end - start:.6f}s')
+    return result
+  return wrapper
+
+def retry(max_attempts):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    print(f'Attempt {attempt} failed: {e}')
+            print(f'All {max_attempts} attempts failed.')
+        return wrapper
+    return decorator
+@timer
+def timed_function1() -> None:
+  """First function to time."""
+  print('hello')
+
+@timer
+def timed_function2() -> None:
+  """Second function to time."""
+  print('hello')
+
+@retry(max_attempts=3)
+def limited_retries() -> None:
+    print("Attempting...")
+    raise Exception("Still failing")
+
+timed_function1()
+timed_function2()
+limited_retries()

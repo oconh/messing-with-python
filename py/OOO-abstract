@@ -1,0 +1,26 @@
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    @abstractmethod
+    def speak(self) -> str:
+        pass
+
+class Dog(Animal):
+  def speak(self) -> str:
+    return f'{self.name} says woof!'
+
+class Cat(Animal):
+  def speak(self) -> str:
+    return f'{self.name} says meow!'
+
+class Bird(Animal):
+  def speak(self) -> str:
+    return f'{self.name} says chirp!'
+
+animals = [Dog('Fido'), Cat('Whiskers'), Bird('Tweety')]
+
+for animal in animals:
+  print(animal.speak())

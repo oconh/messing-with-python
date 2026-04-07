@@ -1,0 +1,56 @@
+import json
+
+tasks = []
+
+def add_task() -> None:
+    task = input('Add a task: ')
+    tasks.append(task)
+    print(f'"{task}" added.')
+
+def delete_task() -> None:
+    task = input('Which task to delete? ')
+    if task in tasks:
+        tasks.remove(task)
+        print(f'"{task}" removed.')
+    else:
+        print(f'"{task}" not found in your list.')
+
+def list_tasks() -> None:
+    if tasks:
+        for i, task in enumerate(tasks, 1):
+            print(f'{i}. {task}')
+    else:
+        print('Your list is empty.')
+
+def save_tasks() -> None:
+    with open('tasks.json', 'w') as f:
+        json.dump(tasks, f)
+
+def load_tasks() -> list:
+    try:
+        with open('tasks.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        print('Warning: save file was corrupted, starting fresh.')
+        return []
+
+
+if __name__ == '__main__':
+    tasks = load_tasks()
+
+    while True:
+        choice = input('What would you like to do? (add, delete, list, quit): ')
+        if choice == 'add':
+            add_task()
+            save_tasks()
+        elif choice == 'delete':
+            delete_task()
+            save_tasks()
+        elif choice == 'list':
+            list_tasks()
+        elif choice == 'quit':
+            break
+        else:
+            print('Invalid choice. Try add, delete, list or quit.')

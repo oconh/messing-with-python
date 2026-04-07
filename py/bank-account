@@ -1,0 +1,29 @@
+class BankAccount:
+    def __init__(self, balance: int = 0) -> None:
+        self.balance = balance
+
+    def deposit(self, amount: int) -> int:
+        self.balance += amount
+        return self.balance
+
+    def withdraw(self, amount: int) -> int:
+        if amount > self.balance:
+            raise ValueError('Insufficient funds.')
+        self.balance -= amount
+        return self.balance
+
+    def __str__(self) -> str:
+        return f'Balance: £{self.balance}'
+
+
+if __name__ == '__main__':
+    acc = BankAccount(100)
+    print(acc)              # Balance: £100
+
+    acc.deposit(50)
+    print(acc)              # Balance: £150
+
+    acc.withdraw(30)
+    print(acc)              # Balance: £120
+
+    acc.withdraw(200)       # raises ValueError: Insufficient funds.

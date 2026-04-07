@@ -1,0 +1,39 @@
+student = {'Harry': [23, 45, 99], 'Barry': [87, 88, 89], 'Gary': [90, 91, 92]}
+
+
+def get_averages(students: dict) -> list:
+    results = []
+    for name, grades in students.items():
+        avg = round(sum(grades) / len(grades))
+        results.append((name, avg))
+    return results
+
+
+def add_student() -> None:
+    name = input('Student name: ')
+    try:
+        grades = [int(x.strip()) for x in input('Grades (comma separated): ').split(',')]
+    except ValueError:
+        print('Grades must be numbers.')
+        return
+    student[name] = grades
+    print(f'{name} added.')
+
+
+def top_student() -> str:
+    return max(student, key=lambda x: sum(student[x]) / len(student[x]))
+
+
+while True:
+    choice = input('What would you like to do? (add, top, list, quit): ').strip().lower()
+    if choice == 'add':
+        add_student()
+    elif choice == 'top':
+        print(f'Top student: {top_student()}')
+    elif choice == 'list':
+        for name, avg in get_averages(student):
+            print(f'{name}: {avg}')
+    elif choice == 'quit':
+        break
+    else:
+        print('Invalid choice.')
